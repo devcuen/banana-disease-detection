@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script para descargar imágenes de muestra de enfermedades en banano
-Autor: Sistema de Detección de Enfermedades en Banano
+Autor: J.V Sistema de Detección de Enfermedades en Banano
 """
 
 import os
