@@ -74,7 +74,7 @@ def create_project_structure():
         "docs"
     ]
 
-    print("📁 Creando estructura de directorios...")
+    print("📁 Creando estructura de directorios..")
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
         print(f"   ✅ {directory}")
