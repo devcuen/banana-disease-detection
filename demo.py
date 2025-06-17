@@ -4,7 +4,7 @@
 Demo Script - Banana Disease Detection System
 Ejemplo de uso del sistema de detección de enfermedades en banano
 
-Autor: Jordan Villon
+Autor: Jordan V
 Fecha: Junio 2025
 """
 
