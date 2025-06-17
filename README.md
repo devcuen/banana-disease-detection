@@ -1,302 +1,306 @@
-# 🍌 Banana Disease Detection System with Deep Learning
+# 🍌 Sistema de Detección de Enfermedades en Banano - Demo con Imágenes Automáticas
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://python.org)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Python](https://img.shields.io/badge/Python-3.7+-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Agriculture](https://img.shields.io/badge/Agriculture-AI-brightgreen?style=for-the-badge)](https://github.com/jordanvt18/banana-disease-detection)
 
-Sistema automatizado de detección de enfermedades en cultivos de banano usando Deep Learning y Transfer Learning con PyTorch. Desarrollado para combatir la crisis económica del sector bananero ecuatoriano causada por plagas como Fusarium R4T, Sigatoka Negra y Moko Bacteriano.
+## 🚀 ¡Problema de Imágenes Resuelto!
 
-## 📋 Tabla de Contenidos
+**ACTUALIZACIÓN**: El demo ahora incluye **descarga automática de imágenes** de muestra desde internet. No necesitas buscar imágenes manualmente.
 
-- [Descripción del Proyecto](#-descripción-del-proyecto)
-- [Características Principales](#-características-principales)
-- [Instalación](#-instalación)
-- [Uso](#-uso)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Metodología](#-metodología)
-- [Datasets](#-datasets)
-- [Resultados](#-resultados)
-- [Despliegue](#-despliegue)
-- [Contribución](#-contribución)
-- [Licencia](#-licencia)
-- [Agradecimientos](#-agradecimientos)
-- [Citas y Referencias](#-citas-y-referencias)
+### 📋 Características Nuevas
 
-## 🎯 Descripción del Proyecto
+- ✅ **Descarga automática** de 11 imágenes de muestra de alta calidad
+- ✅ **Imágenes reales** de enfermedades del banano ecuatoriano
+- ✅ **Organización automática** en carpetas por enfermedad
+- ✅ **Demo interactivo** con menú completo
+- ✅ **Análisis masivo** de todas las muestras
+- ✅ **Configuración de un solo comando**
 
-Este sistema utiliza **Transfer Learning** con ResNet18 para detectar automáticamente enfermedades en plantas de banano. La solución está diseñada para ser **costo-eficiente** y accesible para productores de diferentes escalas en Ecuador.
+## 🎯 Imágenes Incluidas
 
-### Clases Detectadas:
-- 🌱 **Plantas Sanas**
-- 🦠 **Fusarium R4T** (Marchitez por Fusarium)
-- 🔴 **Moko Bacteriano** (Ralstonia solanacearum)
-- ⚫ **Sigatoka Negra** (Mycosphaerella fijiensis)
+### 🌱 Plantas Sanas (3 imágenes)
+- Plantaciones saludables de banano en Ecuador
+- Plantas con bolsas protectoras
+- Frutos en desarrollo saludables
 
-## ✨ Características Principales
+### 🟡 Fusarium R4T (2 imágenes)  
+- Síntomas de amarillamiento y marchitez
+- Etapas tempranas y avanzadas
 
-- 🚀 **Transfer Learning** con PyTorch usando ResNet18
-- 📱 **Compatible con móviles** (preparado para TensorFlow Lite)
-- 🎯 **Detección en tiempo real** (5 segundos vs 24-48 horas tradicional)
-- 💰 **Costo-eficiente** (ROI 150-300% primer año)
-- 🌐 **Funciona offline** (ideal para zonas rurales)
-- 📊 **Visualización de confianza** por predicción
-- 🔄 **Data augmentation** avanzado
+### ⚫ Sigatoka Negra (3 imágenes)
+- Manchas características en hojas
+- Síntomas en campo ecuatoriano
+- Progresión de la enfermedad
 
-## 🛠 Instalación
+### 🔴 Moko Bacteriano (3 imágenes)
+- Cortes transversales con descoloración vascular
+- Síntomas completos de la enfermedad
+- Frutos afectados
 
-### Prerrequisitos
-```bash
-Python 3.8+
-CUDA 11.0+ (opcional, para GPU)
-```
+## 🔧 Configuración Automática
 
-### Instalación rápida
+### Opción 1: Configuración Completa (Recomendada)
+
 ```bash
 # Clonar el repositorio
-git clone https://github.com/tu-usuario/banana-disease-detection.git
+git clone https://github.com/jordanvt18/banana-disease-detection.git
 cd banana-disease-detection
 
-# Crear entorno virtual
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# o
-venv\Scripts\activate  # Windows
+# Configuración automática (incluye descarga de imágenes)
+python setup.py
+```
 
+### Opción 2: Configuración Manual
+
+```bash
 # Instalar dependencias
 pip install -r requirements.txt
+
+# Crear estructura de directorios
+mkdir -p data/samples data/raw data/processed models results
+
+# Descargar imágenes de muestra
+python download_samples.py
+
+# Ejecutar demo
+python demo.py
 ```
 
-### Instalación desde código fuente
+## 🖥️ Uso del Demo
+
+### 1. Menú Interactivo
+
 ```bash
-pip install -e .
+python demo.py
 ```
 
-## 🚀 Uso
-
-### 1. Detección básica
-```python
-from src.detector import BananaPlantDiseaseDetector
-from src.utils import predict_image
-
-# Inicializar detector
-detector = BananaPlantDiseaseDetector()
-
-# Predecir una imagen
-result = predict_image("path/to/banana_leaf.jpg", detector)
-print(f"Predicción: {result['class']} - Confianza: {result['confidence']:.2%}")
+**Menú disponible:**
+```
+1. 🖼️  Analizar imagen específica
+2. 📂 Analizar todas las muestras  
+3. ⬇️  Configurar/descargar muestras
+4. ℹ️  Información del sistema
+5. 🚪 Salir
 ```
 
-### 2. Procesamiento por lotes
-```python
-from src.batch_processor import process_images_batch
+### 2. Análisis de Imagen Específica
 
-# Procesar múltiples imágenes
-results = process_images_batch("images/", detector)
+```bash
+# Analizar una imagen específica
+python demo.py --predict data/samples/sano/banana_sano_1.jpg
+
+# Sin mostrar gráficos
+python demo.py --predict imagen.jpg --no-plot
+
+# Guardar resultados en JSON
+python demo.py --predict imagen.jpg --save
 ```
 
-### 3. Entrenamiento personalizado
-```python
-from src.train import train_model
+### 3. Análisis Masivo de Muestras
 
-# Entrenar con tus datos
-train_model(
-    train_dir="data/train/",
-    val_dir="data/val/",
-    epochs=10,
-    learning_rate=0.001
-)
+```bash
+# Analizar todas las imágenes de muestra
+python demo.py --sample-analysis
 ```
 
-## 📁 Estructura del Proyecto
+### 4. Comandos Adicionales
+
+```bash
+# Configurar muestras solamente
+python demo.py --setup-samples
+
+# Información del sistema
+python demo.py --system-info
+
+# Ayuda completa
+python demo.py --help
+```
+
+## 📊 Ejemplo de Salida
+
+```
+================================================================================
+📊 RESULTADOS DEL ANÁLISIS
+================================================================================
+📁 Imagen: banana_sano_1.jpg
+📏 Tamaño: 1200x800 px
+⏰ Timestamp: 2025-06-16T20:22:15.123456
+
+🎯 PREDICCIÓN PRINCIPAL:
+   Clase: Sano
+   Confianza: 87.3%
+
+📈 TODAS LAS PROBABILIDADES:
+   Sano           : 87.3% ████████████████████
+   Fusarium_R4T   : 8.1%  ████
+   Moko_Bacteriano: 2.8%  █
+   Sigatoka_Negra : 1.8%  █
+================================================================================
+```
+
+## 📁 Estructura de Archivos
 
 ```
 banana-disease-detection/
-├── README.md
-├── requirements.txt
-├── setup.py
-├── LICENSE
-├── .gitignore
-├── Dockerfile
-├── docker-compose.yml
-├── .github/
-│   └── workflows/
-│       └── ci.yml
-├── src/
-│   ├── __init__.py
-│   ├── detector.py          # Modelo principal
-│   ├── dataset.py           # Dataset personalizado
-│   ├── train.py             # Script de entrenamiento
-│   ├── utils.py             # Utilidades
-│   └── transforms.py        # Transformaciones de datos
-├── data/
-│   ├── raw/                 # Datos sin procesar
-│   ├── processed/           # Datos procesados
-│   └── samples/             # Imágenes de ejemplo
-├── models/
-│   ├── pretrained/          # Modelos preentrenados
-│   └── checkpoints/         # Checkpoints de entrenamiento
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_model_training.ipynb
-│   └── 03_evaluation.ipynb
-├── scripts/
-│   ├── download_data.py     # Descargar datasets
-│   ├── preprocess.py        # Preprocesamiento
-│   └── deploy.py            # Despliegue
-├── tests/
-│   ├── test_detector.py
-│   ├── test_dataset.py
-│   └── test_utils.py
-├── docs/
-│   ├── installation.md
-│   ├── usage.md
-│   └── api_reference.md
-└── mobile/
-    ├── android/             # App Android
-    └── ios/                 # App iOS
+├── 📄 demo.py                    # Demo principal con descarga automática
+├── 📄 download_samples.py        # Script de descarga de imágenes
+├── 📄 setup.py                   # Configuración automática
+├── 📄 requirements.txt           # Dependencias
+├── 📁 data/
+│   ├── 📁 samples/               # Imágenes de muestra (auto-descargadas)
+│   │   ├── 📁 sano/             # 3 imágenes de plantas sanas
+│   │   ├── 📁 fusarium_r4t/     # 2 imágenes de Fusarium R4T
+│   │   ├── 📁 sigatoka_negra/   # 3 imágenes de Sigatoka Negra
+│   │   ├── 📁 moko_bacteriano/  # 3 imágenes de Moko Bacteriano
+│   │   └── 📄 README.md         # Información de las muestras
+│   ├── 📁 raw/                  # Datos sin procesar
+│   └── 📁 processed/            # Datos procesados
+├── 📁 models/                   # Modelos entrenados
+├── 📁 results/                  # Resultados en JSON
+└── 📁 src/                      # Código fuente
 ```
 
-## 🧪 Metodología
+## 🛠️ Arquitectura Técnica
 
-### Transfer Learning
-- **Modelo base**: ResNet18 preentrenado en ImageNet
-- **Fine-tuning**: Últimas 2 capas especializadas
-- **Optimizador**: Adam con learning rate 0.001
-- **Loss function**: CrossEntropyLoss
+### Modelo Base
+- **Arquitectura**: ResNet18 con Transfer Learning
+- **Framework**: PyTorch 2.0+
+- **Clases**: 4 (Sano, Fusarium R4T, Moko Bacteriano, Sigatoka Negra)
+- **Parámetros**: ~11M (8.46M entrenables)
 
-### Data Augmentation
-- Rotaciones aleatorias (±15°)
-- Ajustes de brillo y contraste (±20%)
-- Flip horizontal y vertical
-- Normalización ImageNet
+### Transformaciones de Datos
+```python
+transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], 
+                        std=[0.229, 0.224, 0.225])
+])
+```
 
-### Captura de Datos
-#### 🚁 Con Drones
-- **Altitud**: 10-15 metros
-- **Resolución**: Mínimo 1080p
-- **Superposición**: 80% lateral, 70% frontal
-- **Horario óptimo**: 10:00-14:00
+### Compatibilidad de Dispositivos
+- ✅ **CPU**: Funcionamiento básico
+- ✅ **CUDA**: Aceleración GPU NVIDIA
+- ✅ **MPS**: Apple Silicon (M1/M2)
+- ✅ **Detección automática** del mejor dispositivo
 
-#### 📱 Manual (Smartphone)
-- **Distancia**: 30-50 cm de la hoja
-- **Resolución**: Mínimo 8MP
-- **Iluminación**: Natural sin sombras
-- **Ángulo**: Perpendicular a la superficie
+## 🔍 Solución de Problemas
 
-## 📊 Datasets
+### Error: "No se encontraron imágenes"
 
-### Datasets Utilizados
-1. **Banana Leaves Imagery Dataset** (Nature Scientific Data)
-   - 11,767 imágenes
-   - Categorías: Saludable, Sigatoka, Fusarium
-
-2. **Bangladesh Banana Dataset** (Mendeley)
-   - 424 imágenes
-   - Categorías: Cordana, Healthy, Sigatoka, Pestalotiopsis
-
-3. **HSAkash/Banana-Leaf-Dataset** (GitHub)
-   - Precisión reportada: 98.75%
-
-### Preparación de Datos
 ```bash
-# Descargar datasets
-python scripts/download_data.py
+# Descargar imágenes manualmente
+python download_samples.py
 
-# Preprocesar imágenes
-python scripts/preprocess.py --input data/raw --output data/processed
+# O configurar todo nuevamente
+python setup.py
 ```
 
-## 📈 Resultados
+### Error: "Módulo no encontrado"
 
-### Métricas de Rendimiento
-- **Tiempo de detección**: 5 segundos (vs 24-48h tradicional)
-- **Precisión objetivo**: 90-95%
-- **ROI proyectado**: 150-300% primer año
-- **Reducción pérdidas**: 30-40%
-- **Ahorro pesticidas**: 25%
-
-### Beneficios Económicos
-- **Costo implementación**: $6,600-$18,500 USD
-- **Tiempo ROI**: 12 meses
-- **Cobertura**: 50-100 hectáreas/día (drones)
-- **Productividad**: +10-25%
-
-## 🚀 Despliegue
-
-### Docker
 ```bash
-# Construir imagen
-docker build -t banana-detector .
+# Reinstalar dependencias
+pip install -r requirements.txt
 
-# Ejecutar contenedor
-docker run -p 8000:8000 banana-detector
+# Verificar instalación
+python demo.py --system-info
 ```
 
-### Aplicación Móvil
+### Error: "CUDA out of memory"
+
 ```bash
-# Convertir a TensorFlow Lite
-python scripts/convert_to_tflite.py
-
-# Compilar app Android
-cd mobile/android
-./gradlew assembleRelease
+# Forzar uso de CPU
+python demo.py --device cpu
 ```
 
-### Cloud Deployment
+### Problemas de descarga de imágenes
+
 ```bash
-# AWS Lambda
-serverless deploy
+# Verificar conexión a internet
+ping google.com
 
-# Google Cloud Run
-gcloud run deploy banana-detector --source .
+# Reintentar descarga
+python download_samples.py
 ```
 
-## 🤝 Contribución
+## 💡 Características Avanzadas
 
-1. Fork el proyecto
-2. Crea una rama feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+### Guardado de Resultados
+```python
+# Los resultados se guardan en JSON con timestamp
+{
+    "image_path": "data/samples/sano/banana_sano_1.jpg",
+    "predicted_class": "Sano",
+    "confidence": 0.873,
+    "all_probabilities": {
+        "Sano": 0.873,
+        "Fusarium_R4T": 0.081,
+        "Moko_Bacteriano": 0.028,
+        "Sigatoka_Negra": 0.018
+    },
+    "timestamp": "2025-06-16T20:22:15.123456",
+    "model": "ResNet18_TransferLearning"
+}
+```
 
-### Guías de Contribución
-- Seguir PEP 8 para código Python
-- Agregar tests para nuevas funcionalidades
-- Actualizar documentación
-- Usar commits descriptivos
+### Visualizaciones Incluidas
+- 📊 Gráficos de barras de probabilidades
+- 🖼️ Imagen original con predicción superpuesta
+- 📈 Análisis comparativo de múltiples imágenes
+- 🎨 Colores específicos por enfermedad
 
-## 📄 Licencia
+## 🌐 Fuentes de Imágenes
 
-Este proyecto está bajo la Licencia MIT - ver [LICENSE](LICENSE) para detalles.
+Las imágenes incluidas provienen de:
+- 🏛️ **CABI Digital Library** - Repositorio científico
+- 🔬 **Centros de investigación agrícola** - Fuentes académicas
+- 📚 **Publicaciones científicas** - Papers revisados por pares
+- 🌍 **Organizaciones internacionales** - FAO, CGIAR, etc.
 
 ## 🙏 Agradecimientos
 
-### WorldQuant University - Applied AI Lab
-Agradecimiento especial a **WorldQuant University** y su programa de Deep Learning en el Applied AI Lab. Los conocimientos fundamentales sobre **Transfer Learning** y técnicas de computer vision adquiridos en esta especialización fueron esenciales para el desarrollo exitoso de este proyecto.
+- **WorldQuant University Applied AI Lab** por la educación en Deep Learning y Transfer Learning
+- **Comunidad científica** por las imágenes de dominio público
+- **Desarrolladores de PyTorch** por el framework
+- **Asistencia técnica** durante el desarrollo e implementación
 
-El Applied AI Lab de WorldQuant University proporciona educación práctica en computer vision utilizando proyectos reales como detección de enfermedades en cultivos, lo cual proporcionó el marco conceptual necesario para abordar el problema específico del banano ecuatoriano.
+## 📈 Métricas del Proyecto
 
-### Asistencia Técnica
-Agradecimiento especial por la asistencia técnica durante la investigación, desarrollo del código y estructuración de la documentación. Esta colaboración fue fundamental para identificar datasets relevantes, optimizar la arquitectura del modelo y desarrollar estrategias de deployment efectivas.
+- 📸 **11 imágenes** de muestra de alta calidad
+- 🎯 **4 clases** de detección especializadas
+- ⚡ **5 segundos** tiempo promedio de análisis
+- 💰 **150-300% ROI** proyectado primer año
+- 🌱 **25% reducción** en uso de pesticidas
 
-## 📚 Citas y Referencias
+## 🔄 Actualizaciones Recientes
 
-### Papers Académicos
-1. **Fusarium Wilt Detection**: "Deep Learning for Plant Disease Detection" - *Nature Scientific Data* (2023)
-2. **Transfer Learning in Agriculture**: "Computer Vision Applications in Smart Agriculture" - *IEEE Transactions* (2023)
-3. **Mobile Plant Disease Detection**: "EfficientNet for Real-time Plant Disease Classification" - *Computers and Electronics in Agriculture* (2023)
+### v1.1.0 (Actual)
+- ✅ Descarga automática de imágenes desde internet
+- ✅ Script de configuración completa
+- ✅ Menú interactivo mejorado
+- ✅ Análisis masivo de muestras
+- ✅ Mejor manejo de errores
 
-### Datasets Científicos
-1. Banana Leaves Imagery Dataset - Nature Scientific Data
-2. Bangladesh Banana Disease Dataset - Mendeley Data
-3. HSAkash/Banana-Leaf-Dataset - GitHub Repository
+### v1.0.0
+- 🚀 Lanzamiento inicial
+- ✅ Modelo ResNet18 con Transfer Learning
+- ✅ Demo básico funcional
 
-### Tecnologías y Frameworks
-- [PyTorch](https://pytorch.org/) - Framework de Deep Learning
-- [TensorFlow Lite](https://tensorflow.org/lite) - Despliegue móvil
-- [OpenCV](https://opencv.org/) - Procesamiento de imágenes
-- [scikit-learn](https://scikit-learn.org/) - Machine Learning utilities
+## 🤝 Contribuciones
+
+¡Las contribuciones son bienvenidas! Para contribuir:
+
+1. Fork el repositorio
+2. Crea una rama: `git checkout -b feature/nueva-funcionalidad`
+3. Commit tus cambios: `git commit -m 'Agregar nueva funcionalidad'`
+4. Push a la rama: `git push origin feature/nueva-funcionalidad`
+5. Abre un Pull Request
+
+## 📜 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
 
 ## 📞 Contacto
 
@@ -315,4 +319,11 @@ Agradecimiento especial por la asistencia técnica durante la investigación, de
 
 ---
 
-**Hecho con ❤️ para la agricultura ecuatoriana 🇪🇨**
+<div align="center">
+
+**🍌 Revolucionando la agricultura ecuatoriana con Deep Learning 🤖**
+
+[![GitHub stars](https://img.shields.io/github/stars/jordanvt18/banana-disease-detection?style=social)](https://github.com/jordanvt18/banana-disease-detection)
+[![GitHub forks](https://img.shields.io/github/forks/jordanvt18/banana-disease-detection?style=social)](https://github.com/jordanvt18/banana-disease-detection)
+
+</div>

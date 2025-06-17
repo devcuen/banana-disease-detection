@@ -253,7 +253,7 @@ def demonstrate_model():
     print("\n✨ ¡Detector listo para usar!")
     print("💡 Para usar el detector:")
     print("   result = detector.predict_image('ruta/a/imagen.jpg')")
-    print("   print(f'Predicción: {result["predicted_class"]} - Confianza: {result["confidence"]:.1%}')")
+    print('   print(f\'Predicción: {result["predicted_class"]} - Confianza: {result["confidence"]:.1%}\')')
 
 
 if __name__ == "__main__":
