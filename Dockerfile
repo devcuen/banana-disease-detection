@@ -1,60 +1,61 @@
-# Dockerfile para Banana Disease Detection System
-FROM python:3.9-slim
+# syntax=docker/dockerfile:1.7
 
-# Información del mantenedor
-LABEL maintainer="jordanviion@gmail.com"
-LABEL description="Sistema de detección de enfermedades en banano con Deep Learning"
-LABEL version="1.0.0"
+########################
+# Stage 1: Build wheels
+########################
+FROM python:3.11-slim as builder
 
-# Establecer directorio de trabajo
 WORKDIR /app
 
-# Variables de entorno
-ENV PYTHONPATH="${PYTHONPATH}:/app"
-ENV PYTHONUNBUFFERED=1
-ENV DEBIAN_FRONTEND=noninteractive
+# Optimización: No escribir .pyc, salida sin buffer
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# Instalar dependencias del sistema
-RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
-    libgomp1 \
-    wget \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Instalar dependencias del sistema necesarias solo para build
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gcc && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copiar archivos de requirements primero (para cache de Docker)
+# Copiar solo requirements para aprovechar el cache
 COPY requirements.txt .
 
-# Instalar dependencias de Python
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu && \
-    pip install --no-cache-dir -r requirements.txt
+# Instalar PyTorch CPU y construir ruedas de dependencias
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir torch==2.1.2+cpu torchvision==0.16.2+cpu --index-url https://download.pytorch.org/whl/cpu && \
+    pip wheel --no-cache-dir --wheel-dir /app/wheels -r requirements.txt
 
-# Copiar el código de la aplicación
+########################
+# Stage 2: Runtime
+########################
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Seguridad: Usuario no root
+RUN useradd -m appuser
+
+# Copiar las ruedas y dependencias
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
 COPY . .
 
-# Instalar el paquete en modo desarrollo
-RUN pip install -e .
+# Instalar dependencias desde las ruedas
+RUN pip install --no-cache-dir /wheels/*
 
-# Crear directorios necesarios
-RUN mkdir -p data/samples models/pretrained logs
+# Variables de entorno recomendadas para PyTorch/OpenMP (evita conflictos OMP)
+ENV KMP_DUPLICATE_LIB_OK=TRUE \
+    OMP_NUM_THREADS=2 \
+    MKL_NUM_THREADS=2
 
-# Crear usuario no-root para seguridad
-RUN useradd --create-home --shell /bin/bash appuser && \
-    chown -R appuser:appuser /app
+# Seguridad: Cambiar a usuario no root
 USER appuser
 
-# Exponer el puerto
-EXPOSE 8000
+# Exponer el puerto si es necesario
+EXPOSE 8080
 
-# Comando por defecto
-CMD ["python", "-m", "src.app"]
+# Healthcheck opcional
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+  CMD python -c "import torch; assert torch.__version__"
 
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+# Comando de inicio
+CMD ["python", "demo.py"]
