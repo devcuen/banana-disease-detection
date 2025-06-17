@@ -309,14 +309,6 @@ Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detal
 - **LinkedIn**: [[jordanvillontorres](https://www.linkedin.com/in/jordanvillontorres/)]
 - **GitHub**: [@jordanvt18](https://github.com/jordanvt18)
 
-## 🔗 Enlaces Útiles
-
-- [Documentación API](docs/api_reference.md)
-- [Guía de Instalación](docs/installation.md)
-- [Tutorial de Uso](docs/usage.md)
-- [Demo Online](https://tu-demo.com)
-- [Paper Original](https://link-a-tu-paper.com)
-
 ---
 
 <div align="center">
