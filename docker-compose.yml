@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  banana-detector:
+    build: .
+    container_name: banana-disease-detector
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./results:/app/results
+    environment:
+      - PYTHONPATH=/app
+      - MODEL_PATH=/app/models/pretrained
+      - DATA_PATH=/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  jupyter:
+    build: .
+    container_name: banana-detector-jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    restart: unless-stopped
+
+  api:
+    build: .
+    container_name: banana-detector-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+    environment:
+      - FLASK_ENV=production
+      - API_KEY=your-api-key-here
+    command: python -m src.api
+    restart: unless-stopped
+    depends_on:
+      - banana-detector
+
+volumes:
+  data:
+  models:
+  results:
